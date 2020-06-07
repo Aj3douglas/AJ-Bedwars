@@ -11,3 +11,5 @@ Players can buy upgrades to their island, speed on island etc from a villager
 Iron spawns once every x(defined in config) seconds per team at a location defined in the config.
 Same for gold. Diamonds spawn at generator locations defined in the config (Not per team). Same for emeralds.
 After x amount of time(defined in config) the speed at which generators will be upgraded to the tier 2 speed in the config.
+This is repeated up until tier 4 (The maximum tier). Once a user breaks another users bed the user can then no longer
+respawn. If a player whos bed is broken dies they are put in spectator mode, given a compass they can use to teleport to other users.

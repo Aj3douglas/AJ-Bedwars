@@ -1,0 +1,23 @@
+{
+  "game_settings": {
+
+  },
+  "teams": {
+    "red": {
+      "spawn_point": [100,30,20],
+      "iron_generator_location": [150,30,20],
+      "diamond_generator_location": [200,30,20],
+      "item_store_villager": [120, 30, 20],
+      "team_upgrades_villager": [170,30,20],
+      "bed_location": [110,30,20]
+    },
+    "green": {
+      "spawn_point": [100,30,20],
+      "iron_generator_location": [150,30,20],
+      "diamond_generator_location": [200,30,20],
+      "item_store_villager": [120, 30, 20],
+      "team_upgrades_villager": [170,30,20],
+      "bed_location": [110,30,20]
+    }
+  }
+}

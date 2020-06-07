@@ -1,7 +1,11 @@
-.gradle
-.idea
+gradle
+idea
 build
 cache
 gradle
 spigot
 src/test
+.gitattributes
+gradlew
+settings.gradle
+.gitignore

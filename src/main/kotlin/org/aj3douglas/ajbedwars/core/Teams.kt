@@ -1,3 +1,5 @@
 package org.aj3douglas.ajbedwars.core
 
-data class Teams(val team:MutableMap<String, Team>)
+import com.google.common.collect.ImmutableMap
+
+data class Teams(val team:ImmutableMap<String, Team>)

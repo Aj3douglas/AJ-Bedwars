@@ -1,0 +1,7 @@
+.gradle
+.idea
+build
+cache
+gradle
+spigot
+src/test

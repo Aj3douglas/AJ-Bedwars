@@ -1,18 +1,23 @@
-{
-  "cool_generator_69420":{
+[
+  {
+    "name": "CoolGenerator69",
     "item": "COBBLESTONE",
-    "displayname": "coolblock420",
-    "minutestotier1": 4,
-    "minutestotier2": 8,
-    "minutestotier3": 12,
-    "minutestotier4": 16,
-    "tier1speed": 10,
-    "tier2speed": 15,
-    "tier3speed": 20,
-    "tier4speed": 25,
+    "display_name": "coolblock420",
+    "time_until_tier_upgrade": {
+      "1": 20,
+      "2": 40,
+      "3": 60,
+      "4": 180
+    },
+    "tier_speed": {
+      "1": 4,
+      "2": 8,
+      "3": 12,
+      "4": 16
+    },
     "locations": [
       {
-        "x": 420,
+        "x": 410,
         "y": 69,
         "z": 420
       },
@@ -22,37 +27,10 @@
         "z": 420
       },
       {
-        "x": 420,
-        "y": 69,
-        "z": 420
-      }
-    ]
-  },
-  "emerald_generators": {
-    "minutestotier1": 4,
-    "minutestotier2": 8,
-    "minutestotier3": 12,
-    "minutestotier4": 16,
-    "tier1speed": 10,
-    "tier2speed": 15,
-    "tier3speed": 20,
-    "tier4speed": 25,
-    "locations": [
-      {
-        "x": 420,
-        "y": 69,
-        "z": 420
-      },
-      {
-        "x": 420,
-        "y": 69,
-        "z": 420
-      },
-      {
-        "x": 420,
-        "y": 69,
+        "x": 430,
+        "y": 70,
         "z": 420
       }
     ]
   }
-}
+]

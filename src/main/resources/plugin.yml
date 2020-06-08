@@ -1,0 +1,6 @@
+name: AJ_Bedwars
+version: 1.0
+author: Aj3douglas
+description: Bedwars plugin
+main: org.aj3douglas.ajbedwars.AJBedwars
+softdepend: [HolographicDisplays]

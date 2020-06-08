@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import java.util.*
 import javax.xml.stream.Location
 
-data class Team(
+data class TeamData(
         @SerializedName("spawn_point")
         val spawnPoint:Location,
         @SerializedName("iron_generator_location")

@@ -29,7 +29,7 @@ class GeneratorManager(private val plugin:AJBedwars) {
                 holo.appendTextLine("&aGenerator: &b${generator.name}".colour())
                 holo.appendTextLine("&aTier: &b1".colour())
             }
-            val speedOne = generator.tierSpeeds[0]?.toLong()
+            val speedOne = generator.tierSpeeds[1]?.toLong()
             if(speedOne == null){
                 "Config Error".debug()
                 return
@@ -53,7 +53,7 @@ class GeneratorManager(private val plugin:AJBedwars) {
                 holo.appendTextLine("&aGenerator: &b${generator.name}".colour())
                 holo.appendTextLine("&aTier: &b$tier".colour())
             }
-            val tierSpeed = generator.tierSpeeds[tier - 1]?.toLong()
+            val tierSpeed = generator.tierSpeeds[tier]?.toLong()
             if(tierSpeed == null){
                 "Config Error".debug()
                 return

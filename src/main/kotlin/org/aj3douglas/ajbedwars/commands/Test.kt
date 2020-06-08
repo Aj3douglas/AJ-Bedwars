@@ -22,4 +22,8 @@ class Test(private val plugin:AJBedwars):CommandBase() {
     fun kill(player:Player){
         plugin.generatorManager.killGenerators()
     }
+    @SubCommand("tier")
+    fun setTier(player:Player, tier:String){
+        plugin.generatorManager.setTier(player.world, tier.toInt())
+    }
 }

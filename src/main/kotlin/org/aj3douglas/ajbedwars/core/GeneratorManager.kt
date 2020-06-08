@@ -6,7 +6,9 @@ import com.google.gson.GsonBuilder
 import com.google.gson.stream.JsonReader
 import org.aj3douglas.ajbedwars.AJBedwars
 import org.aj3douglas.ajbedwars.utils.colour
+import org.aj3douglas.ajbedwars.utils.debug
 import org.aj3douglas.ajbedwars.utils.setName
+import org.bukkit.Bukkit
 import org.bukkit.Sound
 import org.bukkit.World
 import org.bukkit.inventory.ItemStack
@@ -27,13 +29,42 @@ class GeneratorManager(private val plugin:AJBedwars) {
                 holo.appendTextLine("&aGenerator: &b${generator.name}".colour())
                 holo.appendTextLine("&aTier: &b1".colour())
             }
+            val speedOne = generator.tierSpeeds[0]?.toLong()
+            if(speedOne == null){
+                "Config Error".debug()
+                return
+            }
             tasks.add(object : BukkitRunnable() {
                 override fun run() {
                     generator.locations.forEach{
                         world.dropItemNaturally(it.toLocation(world).add(0.0, 2.0,0.0), ItemStack(generator.item).setName(generator.displayName))
                     }
                 }
-            }.runTaskTimer(plugin, 0L, generator.secondsToTier1.toLong() *20))
+            }.runTaskTimer(plugin, 0L, speedOne *20))
+        }
+    }
+
+    fun setTier(world:World, tier:Int){
+        killGenerators()
+        readGenerators().forEach{generator->
+            generator.locations.forEach locationForEach@{location->
+                if(!plugin.holoGrams) return@locationForEach
+                val holo = HologramsAPI.createHologram(plugin, location.toLocation(world).add(0.0,4.0, 2.0))
+                holo.appendTextLine("&aGenerator: &b${generator.name}".colour())
+                holo.appendTextLine("&aTier: &b$tier".colour())
+            }
+            val tierSpeed = generator.tierSpeeds[tier - 1]?.toLong()
+            if(tierSpeed == null){
+                "Config Error".debug()
+                return
+            }
+            tasks.add(object : BukkitRunnable() {
+                override fun run() {
+                    generator.locations.forEach{
+                        world.dropItemNaturally(it.toLocation(world).add(0.0, 2.0,0.0), ItemStack(generator.item).setName(generator.displayName))
+                    }
+                }
+            }.runTaskTimer(plugin, 0L, tierSpeed *20))
         }
     }
 

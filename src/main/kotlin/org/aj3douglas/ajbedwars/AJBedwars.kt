@@ -7,7 +7,6 @@ import org.aj3douglas.ajbedwars.commands.GoToWorld
 import org.aj3douglas.ajbedwars.commands.Test
 import org.aj3douglas.ajbedwars.core.GeneratorManager
 import org.aj3douglas.ajbedwars.core.StoreEntityManager
-import org.aj3douglas.ajbedwars.core.Teams
 import org.aj3douglas.ajbedwars.listeners.StoreEntityMenu
 import org.aj3douglas.ajbedwars.utils.*
 import org.bukkit.Bukkit
@@ -21,13 +20,14 @@ import java.util.logging.Level
 import kotlin.properties.Delegates
 
 class AJBedwars:JavaPlugin() {
-    val generatorManager = GeneratorManager(this)
-    val entityManager = StoreEntityManager(this)
-    val fileManager = FileManager(this)
-    val cmdManager = CommandManager(this)
-    val listenerManager = ListenerManager(this)
+    private val gson = GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()
 
-    val gsonBuilder = GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()
+    private val fileManager = FileManager(dataFolder, server.worldContainer, this, gson)
+    val generatorManager = GeneratorManager(this, fileManager)
+    val entityManager = StoreEntityManager(this, fileManager)
+    private val cmdManager = CommandManager(this, generatorManager, entityManager)
+    private val listenerManager = ListenerManager(this)
+
 
     override fun onEnable() {
         fileManager.setupFiles()

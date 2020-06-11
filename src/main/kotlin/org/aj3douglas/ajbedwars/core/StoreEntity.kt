@@ -4,7 +4,7 @@ import org.aj3douglas.ajbedwars.utils.LocationWrapper
 import org.bukkit.entity.EntityType
 
 data class StoreEntity(
-    val name:String?,
-    val type: EntityType?,
-    val locations:List<LocationWrapper>?
+    val name:String,
+    val type: EntityType,
+    val locations:List<LocationWrapper>
 )

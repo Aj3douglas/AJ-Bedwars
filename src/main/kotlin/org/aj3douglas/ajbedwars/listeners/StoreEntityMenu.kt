@@ -9,7 +9,7 @@ class StoreEntityMenu: Listener {
     @EventHandler
     fun onEntityClick(event:PlayerInteractAtEntityEvent){
         if(event.rightClicked.hasMetadata("store-entity")){
-            "WOOT".debug()
+            "WOO".debug()
         }
     }
 }

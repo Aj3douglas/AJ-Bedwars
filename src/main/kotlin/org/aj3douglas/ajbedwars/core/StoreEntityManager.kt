@@ -4,19 +4,21 @@ import com.google.common.reflect.TypeToken
 import com.google.gson.GsonBuilder
 import com.google.gson.stream.JsonReader
 import org.aj3douglas.ajbedwars.AJBedwars
+import org.aj3douglas.ajbedwars.utils.FileManager
 import org.aj3douglas.ajbedwars.utils.debug
 import org.bukkit.World
 import org.bukkit.entity.Entity
 import org.bukkit.entity.LivingEntity
 import org.bukkit.metadata.FixedMetadataValue
 import org.bukkit.metadata.MetadataValue
+import org.bukkit.plugin.java.JavaPlugin
 import java.io.FileReader
 
-class StoreEntityManager(private val plugin:AJBedwars) {
+class StoreEntityManager(private val javaPlugin: JavaPlugin, private val fileManager: FileManager) {
     val gson = GsonBuilder().create()
     val entities = mutableListOf<Entity>()
     fun createEntities(world:World){
-        readEntities().forEach{entity->
+        fileManager.readEntities().forEach{entity->
             if(entity.locations == null){
                 "locatiosn ull".debug()
                 return
@@ -36,7 +38,7 @@ class StoreEntityManager(private val plugin:AJBedwars) {
                     "FUCK".debug()
                     return
                 }
-                entity.setMetadata("store-entity", FixedMetadataValue(plugin, true))
+                entity.setMetadata("store-entity", FixedMetadataValue(javaPlugin, true))
                 entity.setGravity(false)
                 entity.customName = entity.name
                 entity.isCustomNameVisible = true
@@ -51,8 +53,4 @@ class StoreEntityManager(private val plugin:AJBedwars) {
 
     fun kill() = entities.forEach{ if(it.hasMetadata("store-entity")) it.remove() }
 
-    private fun readEntities():List<StoreEntity> = gson.fromJson(
-        JsonReader(FileReader(plugin.fileManager.storeEntitiesFile)),
-        object : TypeToken<List<StoreEntity>>() {}.type
-    )
 }

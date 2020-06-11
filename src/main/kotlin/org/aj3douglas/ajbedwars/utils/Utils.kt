@@ -1,5 +1,9 @@
 package org.aj3douglas.ajbedwars.utils
 
+import com.google.common.reflect.TypeToken
+import org.aj3douglas.ajbedwars.core.Generator
+import org.aj3douglas.ajbedwars.core.StoreEntity
+
 object Utils {
     var holograms:Boolean = false
     fun printStartupMessage(version:String, authors:List<String>, desc:String?){
@@ -11,4 +15,6 @@ object Utils {
             &a----------<&bAJ Bedwars&a>----------
         """.trimIndent().colour()
     }
+    val generatorTypetoken = object : TypeToken<List<Generator>>() {}.type
+    val entityTypeToken = object : TypeToken<List<StoreEntity>>() {}.type
 }

@@ -2,23 +2,24 @@ package org.aj3douglas.ajbedwars.core
 
 
 import org.aj3douglas.ajbedwars.AJBedwars
+import org.aj3douglas.ajbedwars.utils.FileManager
 import org.aj3douglas.ajbedwars.utils.debug
 import org.bukkit.Bukkit
 import org.bukkit.World
 import org.bukkit.WorldCreator
 import java.io.File
 
-class GameManager(private val plugin:AJBedwars) {
+class GameManager(private val dataFolder:File, private val worldContainer:File, private val fileManager: FileManager) {
     var gameInProgress = false
     fun prepareWorld():World?{
-        val tempworld = plugin.dataFolder.resolve("worlds").listFiles().randomOrNull() ?: return null
-        tempworld.copyRecursively(File(plugin.server.worldContainer, tempworld.name), true)
+        val tempworld = dataFolder.resolve("worlds").listFiles().randomOrNull() ?: return null
+        tempworld.copyRecursively(File(worldContainer, tempworld.name), true)
         val world = Bukkit.createWorld(WorldCreator(tempworld.name)) ?: return null
         "World name: ${world.name}".debug()
-        val mapsList = plugin.fileManager.loadedMaps.getStringList("loaded-maps")
+        val mapsList = fileManager.loadedMaps.getStringList("loaded-maps")
         mapsList.add(world.name)
-        plugin.fileManager.loadedMaps.set("loaded-maps", mapsList)
-        plugin.fileManager.loadedMaps.save(plugin.fileManager.loadedMapsFile)
+        fileManager.loadedMaps.set("loaded-maps", mapsList)
+        fileManager.loadedMaps.save(fileManager.loadedMapsFile)
         gameInProgress = true
         return world
     }

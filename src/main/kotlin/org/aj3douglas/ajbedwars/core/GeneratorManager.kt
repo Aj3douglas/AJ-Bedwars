@@ -5,32 +5,29 @@ import com.google.common.reflect.TypeToken
 import com.google.gson.GsonBuilder
 import com.google.gson.stream.JsonReader
 import org.aj3douglas.ajbedwars.AJBedwars
-import org.aj3douglas.ajbedwars.utils.Utils
-import org.aj3douglas.ajbedwars.utils.colour
-import org.aj3douglas.ajbedwars.utils.debug
-import org.aj3douglas.ajbedwars.utils.setName
+import org.aj3douglas.ajbedwars.utils.*
 import org.bukkit.Bukkit
 import org.bukkit.Sound
 import org.bukkit.World
 import org.bukkit.inventory.ItemStack
+import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.scheduler.BukkitTask
 import java.io.FileReader
 
 
-class GeneratorManager(private val plugin:AJBedwars) {
-    val gson = GsonBuilder().create()
+class GeneratorManager(private val javaPlugin: JavaPlugin, private val fileManager: FileManager) {
     private val tasks = mutableListOf<BukkitTask>()
 
     fun createGenerators(world:World){
-        readGenerators().forEach{generator->
+        fileManager.readGenerators().forEach{generator->
             generator.locations.forEach locationForEach@{location->
                 if(!Utils.holograms) return@locationForEach
-                val holo = HologramsAPI.createHologram(plugin, location.toLocation(world).add(0.0,4.0, 2.0))
+                val holo = HologramsAPI.createHologram(javaPlugin, location.toLocation(world).add(0.0,4.0, 2.0))
                 holo.appendTextLine("&aGenerator: &b${generator.name}".colour())
                 holo.appendTextLine("&aTier: &b1".colour())
             }
-            val speedOne = generator.tierSpeeds[1]?.toLong()
+            val speedOne = generator.tierSpeed[1]?.toLong()
             if(speedOne == null){
                 "Config Error".debug()
                 return
@@ -41,20 +38,19 @@ class GeneratorManager(private val plugin:AJBedwars) {
                         world.dropItemNaturally(it.toLocation(world).add(0.0, 2.0,0.0), ItemStack(generator.item).setName(generator.displayName))
                     }
                 }
-            }.runTaskTimer(plugin, 0L, speedOne *20))
+            }.runTaskTimer(javaPlugin, 0L, speedOne *20))
         }
     }
 
     fun setTier(world:World, tier:Int){
-        killGenerators()
-        readGenerators().forEach{generator->
+         fileManager.readGenerators().forEach{generator->
             generator.locations.forEach locationForEach@{location->
                 if(!Utils.holograms) return@locationForEach
-                val holo = HologramsAPI.createHologram(plugin, location.toLocation(world).add(0.0,4.0, 2.0))
+                val holo = HologramsAPI.createHologram(javaPlugin, location.toLocation(world).add(0.0,4.0, 2.0))
                 holo.appendTextLine("&aGenerator: &b${generator.name}".colour())
                 holo.appendTextLine("&aTier: &b$tier".colour())
             }
-            val tierSpeed = generator.tierSpeeds[tier]?.toLong()
+            val tierSpeed = generator.tierSpeed[tier]?.toLong()
             if(tierSpeed == null){
                 "Config Error".debug()
                 return
@@ -65,19 +61,13 @@ class GeneratorManager(private val plugin:AJBedwars) {
                         world.dropItemNaturally(it.toLocation(world).add(0.0, 2.0,0.0), ItemStack(generator.item).setName(generator.displayName))
                     }
                 }
-            }.runTaskTimer(plugin, 0L, tierSpeed *20))
+            }.runTaskTimer(javaPlugin, 0L, tierSpeed *20))
         }
     }
 
     fun killGenerators(){
         tasks.forEach{ it.cancel() }
-        HologramsAPI.getHolograms(plugin).forEach{ it.delete() }
+        HologramsAPI.getHolograms(javaPlugin).forEach{ it.delete() }
     }
-
-
-    private fun readGenerators():List<Generator> = gson.fromJson(
-            JsonReader(FileReader(plugin.fileManager.generatorsFile)),
-            object : TypeToken<List<Generator>>() {}.type
-    )
 
 }

@@ -15,25 +15,25 @@ import org.bukkit.Location
 import org.bukkit.entity.Player
 
 @Command("test")
-class Test(private val plugin:AJBedwars):CommandBase() {
+class Test(private val generatorManager:GeneratorManager, private val entityManager: StoreEntityManager):CommandBase() {
     @Default
     fun test(player:Player){
-        plugin.generatorManager.createGenerators(player.world)
+        generatorManager.createGenerators(player.world)
     }
     @SubCommand("kill")
     fun kill(player:Player){
-        plugin.generatorManager.killGenerators()
+        generatorManager.killGenerators()
     }
     @SubCommand("tier")
     fun setTier(player:Player, tier:String){
-        plugin.generatorManager.setTier(player.world, tier.toInt())
+        generatorManager.setTier(player.world, tier.toInt())
     }
     @SubCommand("ekill")
     fun entityKill(player:Player){
-        plugin.entityManager.kill()
+        entityManager.kill()
     }
     @SubCommand("entity")
     fun entity(player:Player){
-        plugin.entityManager.createEntities(player.world)
+        entityManager.createEntities(player.world)
     }
 }

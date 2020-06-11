@@ -5,6 +5,7 @@ import com.google.common.reflect.TypeToken
 import com.google.gson.GsonBuilder
 import com.google.gson.stream.JsonReader
 import org.aj3douglas.ajbedwars.AJBedwars
+import org.aj3douglas.ajbedwars.utils.Utils
 import org.aj3douglas.ajbedwars.utils.colour
 import org.aj3douglas.ajbedwars.utils.debug
 import org.aj3douglas.ajbedwars.utils.setName
@@ -24,7 +25,7 @@ class GeneratorManager(private val plugin:AJBedwars) {
     fun createGenerators(world:World){
         readGenerators().forEach{generator->
             generator.locations.forEach locationForEach@{location->
-                if(!plugin.holoGrams) return@locationForEach
+                if(!Utils.holograms) return@locationForEach
                 val holo = HologramsAPI.createHologram(plugin, location.toLocation(world).add(0.0,4.0, 2.0))
                 holo.appendTextLine("&aGenerator: &b${generator.name}".colour())
                 holo.appendTextLine("&aTier: &b1".colour())
@@ -48,7 +49,7 @@ class GeneratorManager(private val plugin:AJBedwars) {
         killGenerators()
         readGenerators().forEach{generator->
             generator.locations.forEach locationForEach@{location->
-                if(!plugin.holoGrams) return@locationForEach
+                if(!Utils.holograms) return@locationForEach
                 val holo = HologramsAPI.createHologram(plugin, location.toLocation(world).add(0.0,4.0, 2.0))
                 holo.appendTextLine("&aGenerator: &b${generator.name}".colour())
                 holo.appendTextLine("&aTier: &b$tier".colour())
@@ -75,7 +76,7 @@ class GeneratorManager(private val plugin:AJBedwars) {
 
 
     private fun readGenerators():List<Generator> = gson.fromJson(
-            JsonReader(FileReader(plugin.generatorsFile)),
+            JsonReader(FileReader(plugin.fileManager.generatorsFile)),
             object : TypeToken<List<Generator>>() {}.type
     )
 

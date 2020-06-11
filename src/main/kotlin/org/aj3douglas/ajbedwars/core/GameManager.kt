@@ -15,10 +15,10 @@ class GameManager(private val plugin:AJBedwars) {
         tempworld.copyRecursively(File(plugin.server.worldContainer, tempworld.name), true)
         val world = Bukkit.createWorld(WorldCreator(tempworld.name)) ?: return null
         "World name: ${world.name}".debug()
-        val mapsList = plugin.loadedMaps.getStringList("loaded-maps")
+        val mapsList = plugin.fileManager.loadedMaps.getStringList("loaded-maps")
         mapsList.add(world.name)
-        plugin.loadedMaps.set("loaded-maps", mapsList)
-        plugin.loadedMaps.save(plugin.loadedMapsFile)
+        plugin.fileManager.loadedMaps.set("loaded-maps", mapsList)
+        plugin.fileManager.loadedMaps.save(plugin.fileManager.loadedMapsFile)
         gameInProgress = true
         return world
     }

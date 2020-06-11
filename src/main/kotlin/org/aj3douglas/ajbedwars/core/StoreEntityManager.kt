@@ -52,7 +52,7 @@ class StoreEntityManager(private val plugin:AJBedwars) {
     fun kill() = entities.forEach{ if(it.hasMetadata("store-entity")) it.remove() }
 
     private fun readEntities():List<StoreEntity> = gson.fromJson(
-        JsonReader(FileReader(plugin.storeEntitiesFile)),
+        JsonReader(FileReader(plugin.fileManager.storeEntitiesFile)),
         object : TypeToken<List<StoreEntity>>() {}.type
     )
 }

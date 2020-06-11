@@ -75,7 +75,8 @@ class GeneratorManager(private val plugin:AJBedwars) {
 
 
     private fun readGenerators():List<Generator> = gson.fromJson(
-        JsonReader(FileReader(plugin.generatorsFile)),
-        object : TypeToken<List<Generator>>() {}.type
+            JsonReader(FileReader(plugin.generatorsFile)),
+            object : TypeToken<List<Generator>>() {}.type
     )
+
 }

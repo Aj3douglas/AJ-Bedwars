@@ -7,6 +7,8 @@ import me.mattstudios.mf.base.CommandBase
 import org.aj3douglas.ajbedwars.AJBedwars
 import org.aj3douglas.ajbedwars.core.GameManager
 import org.aj3douglas.ajbedwars.core.GeneratorManager
+import org.aj3douglas.ajbedwars.core.StoreEntity
+import org.aj3douglas.ajbedwars.core.StoreEntityManager
 import org.aj3douglas.ajbedwars.utils.debug
 import org.bukkit.Bukkit
 import org.bukkit.Location
@@ -25,5 +27,13 @@ class Test(private val plugin:AJBedwars):CommandBase() {
     @SubCommand("tier")
     fun setTier(player:Player, tier:String){
         plugin.generatorManager.setTier(player.world, tier.toInt())
+    }
+    @SubCommand("ekill")
+    fun entityKill(player:Player){
+        plugin.entityManager.kill()
+    }
+    @SubCommand("entity")
+    fun entity(player:Player){
+        plugin.entityManager.createEntities(player.world)
     }
 }

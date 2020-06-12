@@ -5,10 +5,10 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerInteractAtEntityEvent
 
-class StoreEntityMenu: Listener {
+class StoreEntityMenu : Listener {
     @EventHandler
-    fun onEntityClick(event:PlayerInteractAtEntityEvent){
-        if(event.rightClicked.hasMetadata("store-entity")){
+    fun onEntityClick(event: PlayerInteractAtEntityEvent) {
+        if (event.rightClicked.hasMetadata("store-entity")) {
             "WOO".debug()
         }
     }

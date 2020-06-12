@@ -2,6 +2,8 @@
   {
     "name": "CoolVillager69",
     "type": "VILLAGER",
+    /**/
+    "store_type": "",
     "locations": [
       {
         "x": 410,

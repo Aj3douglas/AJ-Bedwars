@@ -9,9 +9,9 @@ import org.bukkit.Location
 import org.bukkit.entity.Player
 
 @Command("gotoworld")
-class GoToWorld:CommandBase() {
+class GoToWorld : CommandBase() {
     @Default
-    fun doStuff(player: Player, world:String){
+    fun doStuff(player: Player, world: String) {
         val loc = Location(Bukkit.getWorld(world), player.location.x, player.location.y, player.location.z)
         player.teleport(loc)
         "Teleported to ${loc.world}".debug()

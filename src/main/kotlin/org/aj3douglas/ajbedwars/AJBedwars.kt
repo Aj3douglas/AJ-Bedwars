@@ -21,19 +21,19 @@ import kotlin.properties.Delegates
 
 class AJBedwars:JavaPlugin() {
     private val gson = GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()
-
-    private val fileManager = FileManager(dataFolder, server.worldContainer, this, gson)
-    val generatorManager = GeneratorManager(this, fileManager)
-    val entityManager = StoreEntityManager(this, fileManager)
-    private val cmdManager = CommandManager(this, generatorManager, entityManager)
+    private val fileManager = FileManager(this, gson)
     private val listenerManager = ListenerManager(this)
+
+    private val generatorManager = GeneratorManager(this, fileManager)
+    private val entityManager = StoreEntityManager(this, fileManager)
+
+    private val cmdManager = CommandManager(this, generatorManager, entityManager)
 
 
     override fun onEnable() {
         fileManager.setupFiles()
         cmdManager.setupCommands()
         listenerManager.registerListeners(StoreEntityMenu())
-        Utils.holograms = Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")
         Utils.printStartupMessage(description.version, description.authors, description.description)
     }
 

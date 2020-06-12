@@ -18,11 +18,11 @@ import java.io.FileReader
 
 class GeneratorManager(private val javaPlugin: JavaPlugin, private val fileManager: FileManager) {
     private val tasks = mutableListOf<BukkitTask>()
-
+    private val holograms = Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")
     fun createGenerators(world:World){
         fileManager.readGenerators().forEach{generator->
             generator.locations.forEach locationForEach@{location->
-                if(!Utils.holograms) return@locationForEach
+                if(!holograms) return@locationForEach
                 val holo = HologramsAPI.createHologram(javaPlugin, location.toLocation(world).add(0.0,4.0, 2.0))
                 holo.appendTextLine("&aGenerator: &b${generator.name}".colour())
                 holo.appendTextLine("&aTier: &b1".colour())
@@ -45,7 +45,7 @@ class GeneratorManager(private val javaPlugin: JavaPlugin, private val fileManag
     fun setTier(world:World, tier:Int){
          fileManager.readGenerators().forEach{generator->
             generator.locations.forEach locationForEach@{location->
-                if(!Utils.holograms) return@locationForEach
+                if(!holograms) return@locationForEach
                 val holo = HologramsAPI.createHologram(javaPlugin, location.toLocation(world).add(0.0,4.0, 2.0))
                 holo.appendTextLine("&aGenerator: &b${generator.name}".colour())
                 holo.appendTextLine("&aTier: &b$tier".colour())

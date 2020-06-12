@@ -8,15 +8,17 @@ import org.aj3douglas.ajbedwars.core.Generator
 import org.aj3douglas.ajbedwars.core.StoreEntity
 import org.bukkit.Bukkit
 import org.bukkit.configuration.file.YamlConfiguration
+import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 import java.io.FileReader
 
-class FileManager( dataFolder:File, private val worldContainer:File, private val plugin: JavaPlugin, private val gson:Gson) {
-    val teamsFile = File("$dataFolder/teams.json")
-    val storeEntitiesFile = File("$dataFolder/store_entities.json")
-    val generatorsFile = File("$dataFolder/generators.json")
-    val loadedMapsFile = File("$dataFolder/data/loadedmaps.yml")
+class FileManager(private val plugin: Plugin, private val gson:Gson) {
+    private val df = plugin.dataFolder
+    private val teamsFile = df.resolve("teams.json")
+    private val storeEntitiesFile = df.resolve("store_entities.json")
+    private val generatorsFile = df.resolve("generators.json")
+    val loadedMapsFile = df.resolve("data/loaded-maps.yml")
     val loadedMaps = YamlConfiguration.loadConfiguration(loadedMapsFile)
     fun setupFiles(){
         loadedMaps.set("loaded-maps", listOf<String>())
@@ -27,17 +29,17 @@ class FileManager( dataFolder:File, private val worldContainer:File, private val
         plugin.saveResource("store_entities.json",false)
         loadedMaps.getStringList("loaded-maps").forEach{
             Bukkit.unloadWorld(it, false)
-            File(worldContainer.resolve(it).absolutePath).deleteRecursively()
+            File(plugin.server.worldContainer.resolve(it).absolutePath).deleteRecursively()
         }
     }
 
     fun readGenerators():List<Generator> = gson.fromJson(
-            JsonReader(FileReader(generatorsFile)),
+            generatorsFile.readText(),
             Utils.generatorTypetoken
     )
 
     fun readEntities():List<StoreEntity> = gson.fromJson(
-            JsonReader(FileReader(storeEntitiesFile)),
+            storeEntitiesFile.readText(),
             Utils.entityTypeToken
     )
 }

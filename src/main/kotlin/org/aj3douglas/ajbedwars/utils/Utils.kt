@@ -5,7 +5,6 @@ import org.aj3douglas.ajbedwars.core.Generator
 import org.aj3douglas.ajbedwars.core.StoreEntity
 
 object Utils {
-    var holograms:Boolean = false
     fun printStartupMessage(version:String, authors:List<String>, desc:String?){
         """
             &a----------<&bAJ Bedwars&a>----------

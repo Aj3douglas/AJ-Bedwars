@@ -5,5 +5,6 @@ import org.bukkit.Bukkit
 import org.bukkit.event.Listener
 
 class ListenerManager(private val plugin: AJBedwars) {
-    fun registerListeners(vararg listener: Listener) = listener.forEach { Bukkit.getPluginManager().registerEvents(it, plugin) }
+    fun registerListeners(vararg listener: Listener) =
+        listener.forEach { Bukkit.getPluginManager().registerEvents(it, plugin) }
 }

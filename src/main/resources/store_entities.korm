@@ -1,0 +1,16 @@
+{
+  coolBoi420: {
+  entity: {
+    type: "VILLAGER",
+    menu: "example_menu"
+    meta: {
+      glowing: true
+    }
+  }
+  locations: [
+    "420,69,420",
+    "410,69,420",
+    "400,69,420"
+  ]
+}
+}

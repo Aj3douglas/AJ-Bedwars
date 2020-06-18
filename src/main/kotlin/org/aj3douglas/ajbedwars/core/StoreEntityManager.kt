@@ -1,52 +1,32 @@
 package org.aj3douglas.ajbedwars.core
 
-import com.google.gson.GsonBuilder
 import org.aj3douglas.ajbedwars.utils.FileManager
-import org.aj3douglas.ajbedwars.utils.debug
+import org.aj3douglas.ajbedwars.utils.toLocation
 import org.bukkit.World
 import org.bukkit.entity.Entity
 import org.bukkit.entity.LivingEntity
 import org.bukkit.metadata.FixedMetadataValue
+import org.bukkit.metadata.MetadataValue
 import org.bukkit.plugin.java.JavaPlugin
 
-class StoreEntityManager(private val javaPlugin: JavaPlugin, private val fileManager: FileManager) {
-    val gson = GsonBuilder().create()
-    val entities = mutableListOf<Entity>()
-    fun createEntities(world: World) {
-        fileManager.readEntities().forEach { entity ->
-            if (entity.locations == null) {
-                "locatiosn ull".debug()
-                return
-            }
-            entity.locations.forEach { location ->
-                val loc = location.toLocation(world)
-                if (loc == null) {
-                    "loc null".debug()
-                    return
-                }
-                if (entity.type == null) {
-                    "entity type null fuck".debug()
-                    return
-                }
-                val entity = world.spawnEntity(loc, entity.type) as? LivingEntity
-                if (entity == null) {
-                    "FUCK".debug()
-                    return
-                }
-                entity.setMetadata("store-entity", FixedMetadataValue(javaPlugin, true))
-                entity.setGravity(false)
-                entity.customName = entity.name
-                entity.isCustomNameVisible = true
+class StoreEntityManager(private val fileManager: FileManager, private val javaPlugin: JavaPlugin) {
+
+    private val entities = mutableListOf<Entity>()
+
+    fun createEntities(world:World){
+        val entitiesMap = fileManager.readEntities() ?: return
+        entitiesMap.forEach{ (name, data) ->
+            data.locations.forEach{location->
+                val entity = world.spawnEntity(location.toLocation(world), data.entity.type) as LivingEntity
+                entity.setMetadata("store-entity", FixedMetadataValue(javaPlugin, data.entity.menu))
                 entity.isSilent = true
+                entity.customName = name
+                entity.isGlowing = data.entity.meta.glowing
                 entity.setAI(false)
-                entity.isInvulnerable = true
                 entity.isCollidable = false
-                entity.fireTicks = 0
                 entities.add(entity)
             }
         }
     }
-
-    fun kill() = entities.forEach { if (it.hasMetadata("store-entity")) it.remove() }
-
+    fun killEntities() = entities.forEach{ it.remove()}
 }

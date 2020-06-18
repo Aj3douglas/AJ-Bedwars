@@ -8,7 +8,11 @@ import org.bukkit.World
 import org.bukkit.WorldCreator
 import java.io.File
 
-class GameManager(private val dataFolder: File, private val worldContainer: File, private val fileManager: FileManager) {
+class GameManager(
+    private val dataFolder: File,
+    private val worldContainer: File,
+    private val fileManager: FileManager
+) {
     var gameInProgress = false
     fun prepareWorld(): World? {
         val tempworld = dataFolder.resolve("worlds").listFiles().randomOrNull() ?: return null

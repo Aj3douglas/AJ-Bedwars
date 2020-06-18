@@ -1,0 +1,31 @@
+{
+
+1: {
+  item: {
+    type: "STONE"
+    meta: {
+      name: "coolblock420"
+      glowing: true
+    }
+  }
+  cost: "IRON_INGOT : 10"
+  actions: [
+    "[item] STONE 64"
+    "[command] broadcast test {player}",
+  ]
+},
+2: {
+  item: {
+    type: "STONE"
+    meta: {
+      name: "help"
+      glowing: true
+    }
+  }
+  cost: "DIAMOND : 4"
+  actions: [
+    "[item] STONE 64"
+    "[command] broadcast test {player}",
+  ]
+}
+}

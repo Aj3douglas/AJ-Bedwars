@@ -1,0 +1,21 @@
+{
+coolGenerator69: {
+  item: {
+    type: "STONE"
+    meta: {
+      name: "coolBlock69"
+      glowing: true
+    }
+  }
+  // How many Items should spawn per minute in each tier, in order of ascending tier
+  speedTiers: [5,10,15,20]
+  // How long until it should tier up from beginning of game
+  timeToTiers: [5,10,15,20]
+
+  locations: [
+    "420,69,420",
+    "410,69,420",
+    "400,69,420"
+  ]
+}
+}

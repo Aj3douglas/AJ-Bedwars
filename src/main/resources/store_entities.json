@@ -3,7 +3,7 @@
     "name": "CoolVillager69",
     "type": "VILLAGER",
     /**/
-    "store_type": "",
+    "store_type": "example_menu",
     "locations": [
       {
         "x": 410,
